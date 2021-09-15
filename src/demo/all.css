@@ -1,0 +1,80 @@
+.nav {
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+  height: 44px;
+  line-height: 44px;
+  font-weight: bold;
+  position: fixed;
+  z-index: 10;
+  background: #fff;
+  left: 0;
+}
+
+.nav-view {
+  height: 44px;
+  margin-bottom: 10px;
+}
+
+.title {
+  padding-bottom: 15px;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+.am-button {
+  width: 343px !important;
+  border-radius: 22px !important;
+  margin: 0 auto !important;
+  font-size: 16px;
+}
+
+.am-button-warning {
+  background: #F9F9F9 !important;
+  width: 124px !important;
+  height: 40px !important;
+  color: #FF4900 !important;
+  border-radius: 20px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  margin: 0 auto !important;
+}
+
+.add-btn {
+  width: 343px;
+  text-align: center;
+  color: #909399;
+  font-size: 16px;
+  margin: 0 auto;
+  background: #fff;
+  height: 44px;
+  line-height: 44px;
+}
+
+.am-button::before {
+  border: none !important;
+}
+
+.am-input-item {
+  height: 62px !important;
+
+}
+
+.delBtn {
+  width: 100% !important;
+  height: 40px !important;
+  color: #FF4900 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.del-margin {
+  margin-left: 8px;
+}
+
+.bom-view {
+  height: 30px;
+}
