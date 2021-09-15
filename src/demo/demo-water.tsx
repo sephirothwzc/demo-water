@@ -1,22 +1,15 @@
-import { FC } from "react";
-import {
-  WingBlank,
-  WhiteSpace,
-  List,
-  InputItem,
-  Button,
-  Icon,
-} from "antd-mobile";
+import { FC, useRef } from 'react';
+import { WingBlank, WhiteSpace, List, InputItem, Button, Icon } from 'antd-mobile';
 
-import useForm from "rc-form-hooks";
-import Details from "./details";
-import { useImmer } from "use-immer";
-import { dropRight } from "lodash";
-import "./all.css";
+import useForm from 'rc-form-hooks';
+import Details from './details';
+import { useImmer } from 'use-immer';
+import { dropRight, get, keys } from 'lodash';
+import './all.css';
 
 const DemoWater: FC = () => {
-  const [itemCount, setItemCount] = useImmer([{ item: 0 }]);
-  const { getFieldDecorator, validateFields } = useForm<{
+  const [itemCount, setItemCount] = useImmer([{}]);
+  const { getFieldDecorator, values } = useForm<{
     phone: string;
     company: string;
     range: string;
@@ -26,11 +19,16 @@ const DemoWater: FC = () => {
     [k: string]: string;
   }>();
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    validateFields()
-      .then(console.log)
-      .catch((e) => console.error(e.message));
+    console.log(values);
+    const list: any[] = [];
+    keys(refs.current).forEach((p: string) => list.push(get(refs.current, p).getValues()));
+    console.log(list);
   };
+
+  // const globalRef = useRef<IGlobalRef>() as MutableRefObject<IGlobalRef>;
+  const refs = useRef({});
+
+  // const inputRef = useRef() as any;
   return (
     <form onSubmit={handleSubmit}>
       <WingBlank size="lg">
@@ -38,15 +36,15 @@ const DemoWater: FC = () => {
           <div className="nav">信息登记</div>
         </div>
 
-        <List>
-          {getFieldDecorator("phone", {
-            rules: [{ required: true, message: "Please input username!" }],
+        <List key="1">
+          {getFieldDecorator('phone', {
+            rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">手机号</InputItem>)}
-          {getFieldDecorator("company", {
-            rules: [{ required: true, message: "Please input username!" }],
+          {getFieldDecorator('company', {
+            rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">所属单位</InputItem>)}
-          {getFieldDecorator("range", {
-            rules: [{ required: true, message: "Please input username!" }],
+          {getFieldDecorator('range', {
+            rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">管理范围</InputItem>)}
         </List>
 
@@ -55,27 +53,35 @@ const DemoWater: FC = () => {
         <WhiteSpace size="lg" />
         <span className="title">警示宣传措施</span>
 
-        <List>
-          {getFieldDecorator("banner", {
-            rules: [{ required: true, message: "Please input username!" }],
-          })(<InputItem placeholder="请输入">条幅(条)</InputItem>)}
-          {getFieldDecorator("brand", {
-            rules: [{ required: true, message: "Please input username!" }],
-          })(<InputItem placeholder="请输入">警示牌(块)</InputItem>)}
-          {getFieldDecorator("line", {
-            rules: [{ required: true, message: "Please input username!" }],
+        <List key="2">
+          {getFieldDecorator('banner', {
+            rules: [{ required: false, message: 'Please input username!' }],
+          })(
+            <InputItem key="banner" placeholder="请输入">
+              条幅(条)
+            </InputItem>
+          )}
+          {getFieldDecorator('brand', {
+            rules: [{ required: false, message: 'Please input username!' }],
+          })(
+            <InputItem key="brand" placeholder="请输入">
+              警示牌(块)
+            </InputItem>
+          )}
+          {getFieldDecorator('line', {
+            rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">警戒线(米)</InputItem>)}
-          {getFieldDecorator("camera", {
-            rules: [{ required: true, message: "Please input username!" }],
+          {getFieldDecorator('camera', {
+            rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入"> 摄像头(处)</InputItem>)}
-          {getFieldDecorator("radio", {
-            rules: [{ required: true, message: "Please input username!" }],
+          {getFieldDecorator('radio', {
+            rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">广播(处)</InputItem>)}
-          {getFieldDecorator("enclosure", {
-            rules: [{ required: true, message: "Please input username!" }],
+          {getFieldDecorator('enclosure', {
+            rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">围挡(米)</InputItem>)}
-          {getFieldDecorator("other", {
-            rules: [{ required: true, message: "Please input username!" }],
+          {getFieldDecorator('other', {
+            rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">其他</InputItem>)}
         </List>
 
@@ -84,12 +90,12 @@ const DemoWater: FC = () => {
         <WhiteSpace size="lg" />
         <span className="title">当日巡查情况</span>
 
-        <List>
-          {getFieldDecorator("second", {
-            rules: [{ required: true, message: "Please input username!" }],
+        <List key="3">
+          {getFieldDecorator('second', {
+            rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">巡查人次</InputItem>)}
-          {getFieldDecorator("num", {
-            rules: [{ required: true, message: "Please input username!" }],
+          {getFieldDecorator('num', {
+            rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">劝阻游人数量</InputItem>)}
         </List>
 
@@ -98,11 +104,12 @@ const DemoWater: FC = () => {
         <WhiteSpace size="lg" />
         <span className="title">当日问题情况汇总</span>
 
-        {itemCount.map((p) => (
+        {itemCount.map((p, idx) => (
           <>
             <Details
-              key={p.item}
-              getFieldDecorator={getFieldDecorator}
+              key={idx}
+              item={p as any}
+              ref={(el) => ((refs as any).current[idx] = el)}
             ></Details>
             <WhiteSpace size="lg" />
           </>
@@ -125,7 +132,7 @@ const DemoWater: FC = () => {
           className="add-btn"
           onClick={() =>
             setItemCount((draft) => {
-              draft.push({ item: draft.length + 1 });
+              draft.push({ no: draft.length + 1 });
               return draft;
             })
           }
@@ -137,7 +144,9 @@ const DemoWater: FC = () => {
 
         <WhiteSpace size="lg" />
       </WingBlank>
-      <Button type="primary">提交</Button>
+      <Button type="primary" onClick={handleSubmit}>
+        提交
+      </Button>
       <div className="bom-view"></div>
     </form>
   );
