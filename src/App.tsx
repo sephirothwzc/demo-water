@@ -1,14 +1,15 @@
 import './App.css';
-import { Button } from 'antd-mobile';
+import { ApolloProvider } from '@apollo/client';
+import { useApolloClient } from './plugins/use-apollo-client';
+import DemoWater from './demo/demo-water';
 import 'antd-mobile/dist/antd-mobile.css';
 
 function App() {
+  const client = useApolloClient();
   return (
-    <div className="App">
-      <header className="App-header">
-        <Button>Start</Button>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <DemoWater />
+    </ApolloProvider>
   );
 }
 
