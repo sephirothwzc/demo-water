@@ -16989,3 +16989,30 @@ export type DemoWaterMutation = {
   readonly __typename?: "Mutation";
   readonly demoWater?: Maybe<string>;
 };
+
+export type FindDemoWaterQueryVariables = Exact<{
+  param?: Maybe<QueryListParam>;
+}>;
+
+export type FindDemoWaterQuery = {
+  readonly __typename?: "Query";
+  readonly demoWaterAll?: Maybe<
+    ReadonlyArray<
+      Maybe<{
+        readonly __typename?: "DemoWater";
+        readonly id?: Maybe<string>;
+        readonly phone?: Maybe<string>;
+        readonly jsonValue?: Maybe<any>;
+        readonly createdAt?: Maybe<any>;
+      }>
+    >
+  >;
+};
+
+export type DemoWaterFragment = {
+  readonly __typename?: "DemoWater";
+  readonly id?: Maybe<string>;
+  readonly phone?: Maybe<string>;
+  readonly jsonValue?: Maybe<any>;
+  readonly createdAt?: Maybe<any>;
+};

@@ -1,3 +1,16 @@
 mutation demoWater($param: DemoWaterSaveIn!) {
   demoWater(param: $param)
 }
+
+query findDemoWater($param: QueryListParam) {
+  demoWaterAll(param: $param) {
+    ...DemoWater
+  }
+}
+
+fragment DemoWater on DemoWater {
+  id
+  phone
+  jsonValue
+  createdAt
+}

@@ -1,9 +1,16 @@
-import * as SchemaTypes from './auth-center';
+import * as SchemaTypes from "./auth-center";
 
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
 const defaultOptions = {};
-
+export const DemoWaterFragmentDoc = gql`
+  fragment DemoWater on DemoWater {
+    id
+    phone
+    jsonValue
+    createdAt
+  }
+`;
 export const DemoWaterDocument = gql`
   mutation demoWater($param: DemoWaterSaveIn!) {
     demoWater(param: $param)
@@ -38,14 +45,76 @@ export function useDemoWaterMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<SchemaTypes.DemoWaterMutation, SchemaTypes.DemoWaterMutationVariables>(
-    DemoWaterDocument,
-    options
-  );
+  return Apollo.useMutation<
+    SchemaTypes.DemoWaterMutation,
+    SchemaTypes.DemoWaterMutationVariables
+  >(DemoWaterDocument, options);
 }
-export type DemoWaterMutationHookResult = ReturnType<typeof useDemoWaterMutation>;
-export type DemoWaterMutationResult = Apollo.MutationResult<SchemaTypes.DemoWaterMutation>;
+export type DemoWaterMutationHookResult = ReturnType<
+  typeof useDemoWaterMutation
+>;
+export type DemoWaterMutationResult =
+  Apollo.MutationResult<SchemaTypes.DemoWaterMutation>;
 export type DemoWaterMutationOptions = Apollo.BaseMutationOptions<
   SchemaTypes.DemoWaterMutation,
   SchemaTypes.DemoWaterMutationVariables
+>;
+export const FindDemoWaterDocument = gql`
+  query findDemoWater($param: QueryListParam) {
+    demoWaterAll(param: $param) {
+      ...DemoWater
+    }
+  }
+  ${DemoWaterFragmentDoc}
+`;
+
+/**
+ * __useFindDemoWaterQuery__
+ *
+ * To run a query within a React component, call `useFindDemoWaterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindDemoWaterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindDemoWaterQuery({
+ *   variables: {
+ *      param: // value for 'param'
+ *   },
+ * });
+ */
+export function useFindDemoWaterQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    SchemaTypes.FindDemoWaterQuery,
+    SchemaTypes.FindDemoWaterQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    SchemaTypes.FindDemoWaterQuery,
+    SchemaTypes.FindDemoWaterQueryVariables
+  >(FindDemoWaterDocument, options);
+}
+export function useFindDemoWaterLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SchemaTypes.FindDemoWaterQuery,
+    SchemaTypes.FindDemoWaterQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    SchemaTypes.FindDemoWaterQuery,
+    SchemaTypes.FindDemoWaterQueryVariables
+  >(FindDemoWaterDocument, options);
+}
+export type FindDemoWaterQueryHookResult = ReturnType<
+  typeof useFindDemoWaterQuery
+>;
+export type FindDemoWaterLazyQueryHookResult = ReturnType<
+  typeof useFindDemoWaterLazyQuery
+>;
+export type FindDemoWaterQueryResult = Apollo.QueryResult<
+  SchemaTypes.FindDemoWaterQuery,
+  SchemaTypes.FindDemoWaterQueryVariables
 >;
