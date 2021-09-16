@@ -3,6 +3,7 @@ import { ActivityIndicator, List } from 'antd-mobile';
 import { useFindDemoWaterQuery } from 'generator/auth-center.operation';
 import { DemoWaterFragment } from 'generator/auth-center';
 import { useHistory } from 'react-router-dom';
+import { format } from 'date-fns';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -31,7 +32,8 @@ const WaterList: FC = () => {
               onClick={() => handleToDetails(p as any)}
               platform="android"
             >
-              {p?.createdAt} （{p?.phone}）<Brief>当日巡查情况:{p?.jsonValue.second}</Brief>
+              {format(new Date(p?.createdAt), 'yyyy年MM月dd日 HH:MM')} （{p?.phone}）
+              <Brief>当日巡查情况:{p?.jsonValue.second}</Brief>
             </Item>
           );
         })}
