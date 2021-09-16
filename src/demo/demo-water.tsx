@@ -40,6 +40,27 @@ const DemoWater: FC = () => {
       setFieldsValue({ company: '永定河管理处' });
     }
   };
+
+  const showDel = () => {
+    if (itemCount.length <= 1) {
+      return undefined;
+    }
+    return (
+      <List.Item>
+        <div
+          className="delBtn"
+          onClick={() =>
+            setItemCount((draft) => {
+              return dropRight(draft);
+            })
+          }
+        >
+          <Icon type="cross-circle-o" />
+          <span className="del-margin">删除</span>
+        </div>
+      </List.Item>
+    );
+  };
   return (
     <form onSubmit={handleSubmit}>
       <WingBlank size="lg">
@@ -135,20 +156,7 @@ const DemoWater: FC = () => {
             <WhiteSpace size="lg" />
           </>
         ))}
-        <List.Item>
-          <div
-            className="delBtn"
-            onClick={() =>
-              setItemCount((draft) => {
-                return dropRight(draft);
-              })
-            }
-          >
-            <Icon type="cross-circle-o" />
-            <span className="del-margin">删除</span>
-          </div>
-        </List.Item>
-
+        {showDel()}
         <div
           className="add-btn"
           onClick={() =>

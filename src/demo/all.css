@@ -76,3 +76,11 @@
   height: 44px;
   line-height: 44px;
 }
+
+.show-element {
+  display: block;
+}
+
+.hide-element {
+  display: none;
+}
