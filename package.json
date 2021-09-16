@@ -38,7 +38,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generator": "graphql-codegen --config auth.yml"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +60,9 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.172"
+    "@types/lodash": "^4.14.172",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.0"
   }
 }

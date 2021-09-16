@@ -3,7 +3,7 @@ hooks:
   afterAllFileWrite:
     - prettier --write
 overwrite: true
-schema: 'http://localhost:8090/graphql?userId=123'
+schema: 'https://stage-api-stone-talent.cyberstone.com.cn/graphql?userId=123'
 documents: 'src/**/*.graphql'
 generates:
   # 基础类型

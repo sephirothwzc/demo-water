@@ -4,11 +4,13 @@ import { WingBlank, WhiteSpace, List, InputItem, Button, Icon, Toast } from 'ant
 import useForm from 'rc-form-hooks';
 import Details from './details';
 import { useImmer } from 'use-immer';
-import { dropRight, get, keys } from 'lodash';
+import { dropRight, get, keys, result } from 'lodash';
 import './all.css';
+import { useDemoWaterMutation } from 'generator/auth-center.operation';
 
 const DemoWater: FC = () => {
   const [itemCount, setItemCount] = useImmer([{}]);
+  const [loading, setLoading] = useImmer(false);
   const { getFieldDecorator, validateFields, values, resetFields, setFieldsValue } = useForm<{
     phone: string;
     company: string;
@@ -16,9 +18,11 @@ const DemoWater: FC = () => {
     banner: string;
     brand: string;
     line: string;
+    details: any;
     [k: string]: string;
   }>();
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    setLoading((draft) => true);
     e.preventDefault();
     const formValue = validateFields().then((result) => {
       return result;
@@ -27,11 +31,31 @@ const DemoWater: FC = () => {
     console.log(formValue);
     console.log(values);
     const list: any[] = [];
-    keys(refs.current).forEach((p: string) => list.push(get(refs.current, p).getValues()));
+    keys(refs.current).forEach((p: string) => list.push(get(refs.current, p)?.getValues?.()));
     console.log(list);
-    Toast.success('提交成功!');
-    resetFields();
+    values.details = list.map((p) => p);
+    return save({
+      variables: {
+        param: {
+          phone: values.phone,
+          jsonValue: values,
+        },
+      },
+    })
+      .then((resut) => {
+        return result;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        Toast.success('提交成功!');
+        resetFields();
+        setLoading((draft) => false);
+      });
   };
+
+  const [save] = useDemoWaterMutation();
 
   const refs = useRef({});
 
@@ -173,7 +197,7 @@ const DemoWater: FC = () => {
 
         <WhiteSpace size="lg" />
       </WingBlank>
-      <Button type="primary" onClick={handleSubmit}>
+      <Button loading={loading} type="primary" onClick={handleSubmit}>
         提交
       </Button>
       <div className="bom-view"></div>
