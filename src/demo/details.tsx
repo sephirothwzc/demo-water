@@ -19,12 +19,13 @@ export interface DetailsProps {
 }
 
 const Details: FC<DetailsProps> = forwardRef(({ item }, ref) => {
-  const { getFieldDecorator, values } = useForm<{
+  const { getFieldDecorator, values, resetFields } = useForm<{
     [k: string]: string;
   }>();
 
   useImperativeHandle(ref, () => ({
     getValues: () => {
+      resetFields();
       return values;
     },
   }));

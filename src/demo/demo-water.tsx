@@ -1,5 +1,5 @@
 import { FC, useRef } from 'react';
-import { WingBlank, WhiteSpace, List, InputItem, Button, Icon } from 'antd-mobile';
+import { WingBlank, WhiteSpace, List, InputItem, Button, Icon, Toast } from 'antd-mobile';
 
 import useForm from 'rc-form-hooks';
 import Details from './details';
@@ -9,7 +9,7 @@ import './all.css';
 
 const DemoWater: FC = () => {
   const [itemCount, setItemCount] = useImmer([{}]);
-  const { getFieldDecorator, values } = useForm<{
+  const { getFieldDecorator, values, resetFields } = useForm<{
     phone: string;
     company: string;
     range: string;
@@ -23,6 +23,8 @@ const DemoWater: FC = () => {
     const list: any[] = [];
     keys(refs.current).forEach((p: string) => list.push(get(refs.current, p).getValues()));
     console.log(list);
+    Toast.success('提交成功!');
+    resetFields();
   };
 
   // const globalRef = useRef<IGlobalRef>() as MutableRefObject<IGlobalRef>;
