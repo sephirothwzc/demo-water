@@ -9,7 +9,7 @@ import './all.css';
 
 const DemoWater: FC = () => {
   const [itemCount, setItemCount] = useImmer([{}]);
-  const { getFieldDecorator, values, resetFields } = useForm<{
+  const { getFieldDecorator, validateFields, values, resetFields, setFieldsValue } = useForm<{
     phone: string;
     company: string;
     range: string;
@@ -19,6 +19,12 @@ const DemoWater: FC = () => {
     [k: string]: string;
   }>();
   const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formValue = validateFields().then((result) => {
+      return result;
+    });
+    // .catch((e) => Toast.fail(e.message));
+    console.log(formValue);
     console.log(values);
     const list: any[] = [];
     keys(refs.current).forEach((p: string) => list.push(get(refs.current, p).getValues()));
@@ -27,10 +33,13 @@ const DemoWater: FC = () => {
     resetFields();
   };
 
-  // const globalRef = useRef<IGlobalRef>() as MutableRefObject<IGlobalRef>;
   const refs = useRef({});
 
-  // const inputRef = useRef() as any;
+  const handlePhoneChange = (value: string) => {
+    if (value === '13683267277') {
+      setFieldsValue({ company: '永定河管理处' });
+    }
+  };
   return (
     <form onSubmit={handleSubmit}>
       <WingBlank size="lg">
@@ -40,8 +49,12 @@ const DemoWater: FC = () => {
 
         <List key="1">
           {getFieldDecorator('phone', {
-            rules: [{ required: false, message: 'Please input username!' }],
-          })(<InputItem placeholder="请输入">手机号</InputItem>)}
+            rules: [{ required: true, message: '请输入正确的手机号' }],
+          })(
+            <InputItem onChange={handlePhoneChange} placeholder="请输入">
+              手机号
+            </InputItem>
+          )}
           {getFieldDecorator('company', {
             rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">所属单位</InputItem>)}
@@ -99,6 +112,12 @@ const DemoWater: FC = () => {
           {getFieldDecorator('num', {
             rules: [{ required: false, message: 'Please input username!' }],
           })(<InputItem placeholder="请输入">劝阻游人数量</InputItem>)}
+          {getFieldDecorator('numCar', {
+            rules: [{ required: false, message: 'Please input username!' }],
+          })(<InputItem placeholder="请输入">劝阻社会车辆</InputItem>)}
+          {getFieldDecorator('orther', {
+            rules: [{ required: false, message: 'Please input username!' }],
+          })(<InputItem placeholder="请输入">其他</InputItem>)}
         </List>
 
         {/* <Card.Footer content="footer content" extra={<div>extra footer content</div>} /> */}
