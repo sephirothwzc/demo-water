@@ -8,6 +8,12 @@ query findDemoWater($param: QueryListParam) {
   }
 }
 
+query findDemoWaterById($id: ID!) {
+  demoWater(id: $id) {
+    ...DemoWater
+  }
+}
+
 fragment DemoWater on DemoWater {
   id
   phone

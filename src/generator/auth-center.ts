@@ -17009,6 +17009,21 @@ export type FindDemoWaterQuery = {
   >;
 };
 
+export type FindDemoWaterByIdQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type FindDemoWaterByIdQuery = {
+  readonly __typename?: "Query";
+  readonly demoWater?: Maybe<{
+    readonly __typename?: "DemoWater";
+    readonly id?: Maybe<string>;
+    readonly phone?: Maybe<string>;
+    readonly jsonValue?: Maybe<any>;
+    readonly createdAt?: Maybe<any>;
+  }>;
+};
+
 export type DemoWaterFragment = {
   readonly __typename?: "DemoWater";
   readonly id?: Maybe<string>;

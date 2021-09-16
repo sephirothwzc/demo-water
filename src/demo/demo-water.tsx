@@ -1,14 +1,34 @@
-import { FC, useRef } from 'react';
-import { WingBlank, WhiteSpace, List, InputItem, Button, Icon, Toast } from 'antd-mobile';
+import { FC, useEffect, useRef } from 'react';
+import {
+  WingBlank,
+  WhiteSpace,
+  List,
+  InputItem,
+  Button,
+  Icon,
+  Toast,
+  ActivityIndicator,
+} from 'antd-mobile';
 
 import useForm from 'rc-form-hooks';
 import Details from './details';
 import { useImmer } from 'use-immer';
-import { dropRight, get, keys, result } from 'lodash';
+import { dropRight, get, keys, result, toString } from 'lodash';
 import './all.css';
-import { useDemoWaterMutation } from 'generator/auth-center.operation';
+import { useDemoWaterMutation, useFindDemoWaterByIdQuery } from 'generator/auth-center.operation';
+import { useLocation } from 'react-router-dom';
+
+const useParamQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
 const DemoWater: FC = () => {
+  const query = useParamQuery();
+  const { data, loading: itemLoading } = useFindDemoWaterByIdQuery({
+    variables: { id: toString(query.get('id')) },
+    skip: !query.get('id'),
+  });
+
   const [itemCount, setItemCount] = useImmer([{}]);
   const [loading, setLoading] = useImmer(false);
   const { getFieldDecorator, validateFields, values, resetFields, setFieldsValue } = useForm<{
@@ -85,6 +105,18 @@ const DemoWater: FC = () => {
       </List.Item>
     );
   };
+
+  useEffect(() => {
+    setFieldsValue({ ...data?.demoWater?.jsonValue });
+    setItemCount((draft) => {
+      return data?.demoWater?.jsonValue?.details;
+    });
+  }, [data, setFieldsValue, setItemCount]);
+
+  if (itemLoading) {
+    return <ActivityIndicator size="large" />;
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <WingBlank size="lg">

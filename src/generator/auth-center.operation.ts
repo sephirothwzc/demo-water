@@ -118,3 +118,62 @@ export type FindDemoWaterQueryResult = Apollo.QueryResult<
   SchemaTypes.FindDemoWaterQuery,
   SchemaTypes.FindDemoWaterQueryVariables
 >;
+export const FindDemoWaterByIdDocument = gql`
+  query findDemoWaterById($id: ID!) {
+    demoWater(id: $id) {
+      ...DemoWater
+    }
+  }
+  ${DemoWaterFragmentDoc}
+`;
+
+/**
+ * __useFindDemoWaterByIdQuery__
+ *
+ * To run a query within a React component, call `useFindDemoWaterByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindDemoWaterByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindDemoWaterByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useFindDemoWaterByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    SchemaTypes.FindDemoWaterByIdQuery,
+    SchemaTypes.FindDemoWaterByIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    SchemaTypes.FindDemoWaterByIdQuery,
+    SchemaTypes.FindDemoWaterByIdQueryVariables
+  >(FindDemoWaterByIdDocument, options);
+}
+export function useFindDemoWaterByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SchemaTypes.FindDemoWaterByIdQuery,
+    SchemaTypes.FindDemoWaterByIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    SchemaTypes.FindDemoWaterByIdQuery,
+    SchemaTypes.FindDemoWaterByIdQueryVariables
+  >(FindDemoWaterByIdDocument, options);
+}
+export type FindDemoWaterByIdQueryHookResult = ReturnType<
+  typeof useFindDemoWaterByIdQuery
+>;
+export type FindDemoWaterByIdLazyQueryHookResult = ReturnType<
+  typeof useFindDemoWaterByIdLazyQuery
+>;
+export type FindDemoWaterByIdQueryResult = Apollo.QueryResult<
+  SchemaTypes.FindDemoWaterByIdQuery,
+  SchemaTypes.FindDemoWaterByIdQueryVariables
+>;

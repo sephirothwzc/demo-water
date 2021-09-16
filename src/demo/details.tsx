@@ -21,7 +21,7 @@ export interface DetailsProps {
 const Details: FC<DetailsProps> = forwardRef(({ item }, ref) => {
   const { getFieldDecorator, values, resetFields } = useForm<{
     [k: string]: string;
-  }>();
+  }>(item as any);
 
   useImperativeHandle(ref, () => ({
     getValues: () => {
@@ -33,33 +33,21 @@ const Details: FC<DetailsProps> = forwardRef(({ item }, ref) => {
   return (
     <List>
       {getFieldDecorator('name', {
+        initialValue: item?.name,
         rules: [{ required: false, message: 'Please input username!' }],
-      })(
-        <InputItem defaultValue={item?.name} placeholder="请输入">
-          问题名称
-        </InputItem>
-      )}
+      })(<InputItem placeholder="请输入">问题名称</InputItem>)}
       {getFieldDecorator('pontions', {
+        initialValue: item?.pontions,
         rules: [{ required: false, message: 'Please input username!' }],
-      })(
-        <InputItem defaultValue={item?.pontions} placeholder="请输入">
-          问题位置
-        </InputItem>
-      )}
+      })(<InputItem placeholder="请输入">问题位置</InputItem>)}
       {getFieldDecorator('describe', {
+        initialValue: item?.describe,
         rules: [{ required: false, message: 'Please input username!' }],
-      })(
-        <InputItem defaultValue={item?.describe} placeholder="请输入">
-          情况概述
-        </InputItem>
-      )}
+      })(<InputItem placeholder="请输入">情况概述</InputItem>)}
       {getFieldDecorator('solve', {
+        initialValue: item?.solve,
         rules: [{ required: false, message: 'Please input username!' }],
-      })(
-        <InputItem defaultValue={item?.solve} placeholder="请输入">
-          是否解决
-        </InputItem>
-      )}
+      })(<InputItem placeholder="请输入">是否解决</InputItem>)}
     </List>
   );
 });
